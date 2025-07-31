@@ -1,12 +1,17 @@
+import CompanionCard from "@/components/CompanionCard";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
 const Page = () => {
   return (
-    <div className="text-2xl underline">
-      <h1>Welcom to my Saas App</h1>
-      <Button>Let&apos;s get Started</Button>
-    </div>
+    <main>
+      <h1 className="text-2xl underline">Popular Companions</h1>
+      <section className="Home-section">
+        <CompanionCard />
+        <CompanionCard />
+        <CompanionCard />
+      </section>
+    </main>
   );
 };
 
