@@ -12,7 +12,7 @@ const Page = () => {
           id="123"
           name="Neura the Brainy Explorer"
           topic="Neural Network of the Brain"
-          subject="science"
+          subject="Science"
           duration={45}
           color="#ffda6e"
         />
@@ -20,7 +20,7 @@ const Page = () => {
           id="456"
           name="Courtsy the Number Wizard"
           topic="Derivatives & Integrals"
-          subject="science"
+          subject="Maths"
           duration={30}
           color="#e5d0ff"
         />
@@ -32,7 +32,6 @@ const Page = () => {
           duration={30}
           color="#BDE7FF"
         />
-      
       </section>
       <section className="home-section">
         <CompanionsList />
