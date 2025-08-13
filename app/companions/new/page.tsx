@@ -1,8 +1,15 @@
+import CompanionsForm from "@/components/CompanionsForm";
 
 const NewCompanion = () => {
   return (
-    <div>NewCompanion</div>
-  )
-}
+    <main>
+      <article>
+        <h1>
+          <CompanionsForm />
+        </h1>
+      </article>
+    </main>
+  );
+};
 
-export default NewCompanion
+export default NewCompanion;
