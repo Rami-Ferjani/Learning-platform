@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
+import { getSubjectColor } from "@/lib/utils";
 interface CompanionsListProps {
   title: string;
   companions?: Companion[];
@@ -35,7 +37,20 @@ const CompanionsList = ({
           {companions?.map(({ id, subject, name, topic, duration }) => (
             <TableRow key={id}>
               <TableCell>
-                <Link href={`/companions/${id}`}>{subject}</Link>
+                <Link href={`/companions/${id}`}>
+                  <div className="flex items-center gap-2">
+                    <div className="">
+                      <Image
+                        className="size-{72px} flex items-center justify-center rounded-lg max-md:hidden"
+                        style={{ backgroundColor: getSubjectColor(subject) }}
+                        src={`/icons/${subject}.svg`}
+                        alt={subject}
+                        width={35}
+                        height={35}
+                      />
+                    </div>
+                  </div>
+                </Link>
               </TableCell>
             </TableRow>
           ))}
