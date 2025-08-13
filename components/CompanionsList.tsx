@@ -39,7 +39,7 @@ const CompanionsList = ({
               <TableCell>
                 <Link href={`/companions/${id}`}>
                   <div className="flex items-center gap-2">
-                    <div className=""> 
+                    <div className="">
                       <Image
                         className="size-{72px} flex items-center justify-center rounded-lg max-md:hidden"
                         style={{ backgroundColor: getSubjectColor(subject) }}
@@ -56,6 +56,37 @@ const CompanionsList = ({
                     </div>
                   </div>
                 </Link>
+              </TableCell>
+
+              <TableCell>
+                <div className="subject-badge w-fit max-md:hidden">
+                  {subject}
+                </div>
+                <div
+                  className="flex item-center justify-center rounded-lg w-fit p-2 md:hidden"
+                  style={{ backgroundColor: getSubjectColor(subject) }}
+                >
+                  <Image
+                    src={`/icons/${subject}.svg`}
+                    alt={subject}
+                    width={18}
+                    height={18}
+                  />
+                </div>
+</TableCell>
+<TableCell>
+                <div className="flex items-center gap-2 w-full justify-end">
+                  <p className="text-2xl">
+                    {duration} <span className="max-md:hidden">mins</span>
+                  </p>
+                  <Image
+                    src="/icons/clock.svg"
+                    alt="minutes"
+                    width={14}
+                    height={14}
+                    className="md:hidden"
+                  />
+                </div>
               </TableCell>
             </TableRow>
           ))}
