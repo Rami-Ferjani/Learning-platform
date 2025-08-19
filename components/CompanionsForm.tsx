@@ -50,7 +50,11 @@ const CompanionsForm = () => {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input
+                  placeholder="Enter the companion name"
+                  {...field}
+                  className="input"
+                />
               </FormControl>
               <FormDescription>
                 This is your public display name.
