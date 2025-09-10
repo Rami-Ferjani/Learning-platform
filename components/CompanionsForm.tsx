@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -28,7 +28,7 @@ const formSchema = z.object({
   topic: z.string().min(1, { message: "Topic is required." }),
   voice: z.string().min(1, { message: "Voice is required." }),
   style: z.string().min(1, { message: "Style is required." }),
-  duration: z.coerce.number().min(1, { message: "Duration is required." }),
+  duration: z.number().min(1, { message: "Duration is required." }),
 });
 
 const CompanionsForm = () => {
@@ -77,11 +77,7 @@ const CompanionsForm = () => {
             <FormItem>
               <FormLabel>Subject</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger className="input capitalize ">
                     <SelectValue placeholder="Select the subject" />
                   </SelectTrigger>
@@ -98,74 +94,95 @@ const CompanionsForm = () => {
                   </SelectContent>
                 </Select>
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="name"
+          name="topic"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>What should the companion help with</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter the companion name"
+                <Textarea
+                  placeholder="Ex. Derivates & Integral"
                   {...field}
                   className="input"
                 />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="name"
+          name="voice"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Voice</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter the companion name"
-                  {...field}
-                  className="input"
-                />
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger className="input  ">
+                    <SelectValue placeholder="Select the voice" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="male">male</SelectItem>
+                    <SelectItem value="female">female</SelectItem>
+                  </SelectContent>
+                </Select>
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="name"
+          name="style"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Style</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter the companion name"
-                  {...field}
-                  className="input"
-                />
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger className="input  ">
+                    <SelectValue placeholder="Select the style" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="formal">Formal</SelectItem>
+                    <SelectItem value="casual">Casual</SelectItem>
+                  </SelectContent>
+                </Select>
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <FormField
+          control={form.control}
+          name="duration"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Estimated session duration in minutes</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  placeholder="15"
+                  {...field}
+                  className="input"
+                />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full cursor-pointer">
+          Build Your Companion
+        </Button>
       </form>
     </Form>
   );
