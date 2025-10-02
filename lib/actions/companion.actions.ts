@@ -6,7 +6,7 @@ export const createCompanion = async (formData: CreateCompanion) => {
   const supabase = createSupabaseClient();
 
   const { data, error } = await supabase
-    .from("companions")
+    .from("Companions")
     .insert({ ...formData, author })
     .select();
 
@@ -15,4 +15,3 @@ export const createCompanion = async (formData: CreateCompanion) => {
 
   return data[0];
 };
- 
