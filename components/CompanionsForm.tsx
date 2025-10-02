@@ -50,6 +50,9 @@ const CompanionsForm = () => {
     const companion = await createCompanion(values);
     if (companion) {
       redirect(`/companions/${companion.id}`);
+    } else {
+      console.log("Fialed to create a companion");
+      redirect("/");
     }
   };
 
