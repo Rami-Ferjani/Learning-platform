@@ -1,7 +1,6 @@
 "use server";
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseClient } from "../supabase";
-import { createCompanion } from "@/lib/actions/companion.actions";
 
 export const createCompanion = async (formData: CreateCompanion) => {
   const { userId: author } = await auth();
@@ -30,5 +29,14 @@ export const getAllCompanions = async ({
     query = query
       .ilike("subject", `%${subject}%`)
       .or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+  } else if (subject) {
+    query = query.ilike("subject", "%${subject}%");
+  } else if (topic) {
+    query = query.or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
   }
+
+  query=query.range((page-1*limit),page*limit-1);
+  const {data:companions,error}=await query;
+  if(error) throw new Error(error.message);
+  return companions
 };
