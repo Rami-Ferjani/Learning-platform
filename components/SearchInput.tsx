@@ -2,6 +2,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { formUrlQuery } from "@jsmastery/utils";
 const SearchInput = () => {
   const pathname = usePathname();
   const router = useRouter();
@@ -10,8 +11,13 @@ const SearchInput = () => {
   const [searchQuery, setSearchQuery] = useState(query);
   useEffect(() => {
     if (searchQuery) {
-      // navigate to the current pathname with the topic query param
-      router.push(`/currentRoute?topic=${searchQuery}`);
+      const newUrl = formUrlQuery({
+        params: searchParam.toString(),
+        key: "topic",
+        value: searchQuery,
+      });
+
+      router.push(newUrl);
     }
   }, [searchQuery, router, pathname, searchParam]);
   return (
