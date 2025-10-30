@@ -17,7 +17,7 @@ const SearchInput = () => {
         value: searchQuery,
       });
 
-      router.push(newUrl);
+      router.push(newUrl, { scroll: false });
     }
   }, [searchQuery, router, pathname, searchParam]);
   return (
