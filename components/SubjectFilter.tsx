@@ -20,23 +20,34 @@ const SubjectFilter = () => {
   const query = searchParam.get("subject") || "";
   const [subjectFilter, setSubjectFilter] = useState(query);
   useEffect(() => {
-    if (subjectFilter) {
+    if (subjectFilter != "all") {
       const newUrl = formUrlQuery({
         params: searchParam.toString(),
         key: "subject",
         value: subjectFilter,
       });
       router.push(newUrl, { scroll: false });
+    } else {
+      if (subjectFilter === "all") {
+        const newUrl = removeKeysFromUrlQuery({
+          params: searchParam.toString(),
+          keysToRemove: ["subject"],
+        });
+        router.push(newUrl, { scroll: false });
+      }
     }
   }, [subjectFilter, router, pathname, searchParam]);
   return (
-    <Select>
+    <Select onValueChange={(value) => setSubjectFilter(value)}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Subject Filter" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Subject Filter</SelectLabel>
+          <SelectItem key="all" value="all">
+            All Companions
+          </SelectItem>
           {subjects.map((subject) => (
             <SelectItem key={subject} value={`${subject}`}>
               {subject}
