@@ -10,7 +10,7 @@ const SearchInput = () => {
   const query = searchParam.get("topic") || "";
   const [searchQuery, setSearchQuery] = useState(query);
   useEffect(() => {
-    const delayDebounchFn = setTimeout(() => {
+    setTimeout(() => {
       if (searchQuery) {
         const newUrl = formUrlQuery({
           params: searchParam.toString(),
