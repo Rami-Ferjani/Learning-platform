@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {cn,getSubjectColor} from "@/lib/utils";
+import { vapi } from "@/lib/vapi.sdk";
 enum CallStatus{
   INACTIVE='INACTIVE',
   CONNECTING='CONNECTING',
@@ -19,6 +20,14 @@ enum CallStatus{
     }
 const CompanionComponent = ({ companionId,subject,topic,name,userName,userImage,style,voice} :CompanionComponentProps}) => {
   const [callStatus,setCallStatus]=useState<CallStatus>(CallStatus.inactive);
+
+  useEffect(()=>{
+    const onCallStart=()=>setCallStatus(CallStatus.ACTIVE);
+    const onCallEnd=()=>setCallStatus(CallStatus.FINISHED);
+    const onMessage={};
+    const onError=(error:Error)=>console.log('Error',error);
+    vapi.on('call-start',onCallStart);
+  })
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
