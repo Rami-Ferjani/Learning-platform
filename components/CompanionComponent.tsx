@@ -1,5 +1,12 @@
+"use client";
 import React, { useState } from "react";
 import {cn,getSubjectColor} from "@/lib/utils";
+enum CallStatus{
+  INACTIVE='INACTIVE',
+  CONNECTING='CONNECTING',
+  ACTIVE='ACTIVE',
+  FINISHED='FINISHED'
+}
  interface CompanionComponentProps {
         companionId: string;
         subject: string;
