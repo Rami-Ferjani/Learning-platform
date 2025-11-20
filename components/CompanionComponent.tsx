@@ -34,6 +34,15 @@ const CompanionComponent = ({ companionId,subject,topic,name,userName,userImage,
     vapi.on('error',onError);
     vapi.on('speech-start',onSpeechStart);
     vapi.on('speech-end',onSpeechEnd);
+
+    return()=>{
+    vapi.off('call-start',onCallStart);
+    vapi.off('call-end',onCallEnd);
+    vapi.off('message',onMessage);
+    vapi.off('error',onError);
+    vapi.off('speech-start',onSpeechStart);
+    vapi.off('speech-end',onSpeechEnd);
+    }
   })
   return (
     <section className="flex flex-col h-[70vh]">
