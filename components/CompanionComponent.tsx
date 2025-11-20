@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import {cn,getSubjectColor} from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
+import Image from "next/image";
 enum CallStatus{
   INACTIVE='INACTIVE',
   CONNECTING='CONNECTING',
@@ -52,7 +53,14 @@ const CompanionComponent = ({ companionId,subject,topic,name,userName,userImage,
             className="companion-avatar"
             style={{ backgroundColor: getSubjectColor(subject) }}
           >
-            <div className={cn('absolute transition-opacity duration-1000')}></div>
+            <div className={
+              cn(
+              'absolute transition-opacity duration-1000',callStatus===CallStatus.FINISHED ||callStatus===CallStatus.INACTIVE?'opacity-100':'opacity-0',
+              callStatus===CallStatus.CONNECTING && 'opacity-100 animate-pulse'
+              )}>
+                <Image  src={`/icons/${subject}.svg`} alt={subject} width={150} height={150} className="max-sm:w-fit"/>
+
+                </div>
           </div>
         </div>
       </section>
