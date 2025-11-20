@@ -19,7 +19,7 @@ enum CallStatus{
         voice?: string;
     }
 const CompanionComponent = ({ companionId,subject,topic,name,userName,userImage,style,voice} :CompanionComponentProps}) => {
-  const [callStatus,setCallStatus]=useState<CallStatus>(CallStatus.inactive);
+  const [callStatus,setCallStatus]=useState<CallStatus>(CallStatus.INACTIVE);
   const [isSpeaking,setIsSpeaking]=useState(false);
   useEffect(()=>{
     const onCallStart=()=>setCallStatus(CallStatus.ACTIVE);
