@@ -34,17 +34,14 @@ const CompanionComponent = ({
 }: CompanionComponentProps) => {
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const lottieRef = useRef<LottieRefCurrentProps>(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   useEffect(() => {
     if (lottieRef) {
       if (isSpeaking) lottieRef.current?.play();
       else lottieRef.current?.stop();
     }
-
-    return () => {
-      second;
-    };
   }, [isSpeaking, lottieRef]);
 
   useEffect(() => {
@@ -70,6 +67,11 @@ const CompanionComponent = ({
       vapi.off("speech-end", onSpeechEnd);
     };
   });
+  const toggleMicrophone = () => {
+    const isMuted = vapi.isMuted();
+    vapi.isMuted(!isMuted);
+    setIsMuted(!isMuted);
+  };
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
@@ -107,8 +109,23 @@ const CompanionComponent = ({
                 lottieRef={lottieRef}
                 animationData={soundwaves}
                 autoplay={false}
+                className="companion-lottie"
               />
             </div>
+          </div>
+          <p className="font-bold text-2xl">{name}</p>
+        </div>
+        <div className="user-section">
+          <div className="user-avatar">
+            <Image
+              src={userImage}
+              alt={userName}
+              width={130}
+              height={130}
+              className="rounded-lg"
+            />
+            <p className="font-bold text-2xl">{userName}</p>
+            <button className="btn-mic" onClick={toggleMicrophone}></button>
           </div>
         </div>
       </section>
