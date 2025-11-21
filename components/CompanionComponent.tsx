@@ -125,7 +125,14 @@ const CompanionComponent = ({
               className="rounded-lg"
             />
             <p className="font-bold text-2xl">{userName}</p>
-            <button className="btn-mic" onClick={toggleMicrophone}></button>
+            <button className="btn-mic" onClick={toggleMicrophone}>
+              <Image
+                src={isMuted ? "/icons/mic-off.svg" : "/icons/mic-on.svg"}
+                alt="mic"
+                width={36}
+                height={36}
+              ></Image>
+            </button>
           </div>
         </div>
       </section>
