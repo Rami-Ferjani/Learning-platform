@@ -72,6 +72,12 @@ const CompanionComponent = ({
     vapi.isMuted(!isMuted);
     setIsMuted(!isMuted);
   };
+  const handleCall=async()=>{
+
+  }
+  const handleDisconnect=async()=>{
+    
+  }
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
@@ -136,8 +142,17 @@ const CompanionComponent = ({
                 {isMuted ? "Turn on microphone" : "Turn off microphone"}
                 <button
                   className={cn(
-                    "roundedd-lg py-2 cursor-pointer transition-colors w-full text-white"
+                    "roundedd-lg py-2 cursor-pointer transition-colors w-full text-white",
+                    callStatus === CallStatus.ACTIVE
+                      ? "bg-red-700"
+                      : "bg-primary",
+                    callStatus === CallStatus.CONNECTING && "animate-pulse"
                   )}
+                  onClick={
+                    callStatus === CallStatus.ACTIVE
+                      ? handleDisconnect
+                      : handleCall
+                  }
                 >
                   {callStatus === CallStatus.ACTIVE
                     ? "End Session"
