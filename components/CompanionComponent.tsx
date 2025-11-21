@@ -83,6 +83,12 @@ const CompanionComponent = ({
                 className="max-sm:w-fit"
               />
             </div>
+            <div
+              className={cn(
+                "absolute transition-opacity-1000",
+                callStatus === CallStatus.ACTIVE ? "opacity-100" : "opacity-0"
+              )}
+            ></div>
           </div>
         </div>
       </section>
