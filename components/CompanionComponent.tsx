@@ -132,6 +132,20 @@ const CompanionComponent = ({
                 width={36}
                 height={36}
               ></Image>
+              <p className="max-sm:hidden">
+                {isMuted ? "Turn on microphone" : "Turn off microphone"}
+                <button
+                  className={cn(
+                    "roundedd-lg py-2 cursor-pointer transition-colors w-full text-white"
+                  )}
+                >
+                  {callStatus === CallStatus.ACTIVE
+                    ? "End Session"
+                    : callStatus === CallStatus.CONNECTING
+                    ? "Connecting"
+                    : "Start Session"}
+                </button>
+              </p>
             </button>
           </div>
         </div>
