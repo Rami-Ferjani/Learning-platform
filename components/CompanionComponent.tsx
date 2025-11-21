@@ -1,8 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { cn, getSubjectColor } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import Image from "next/image";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import soundwaves from "@/constants/soundwaves.json";
 enum CallStatus {
   INACTIVE = "INACTIVE",
   CONNECTING = "CONNECTING",
@@ -33,6 +35,18 @@ const CompanionComponent = ({
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+  useEffect(() => {
+    if (lottieRef) {
+      if (isSpeaking) lottieRef.current?.play();
+      else lottieRef.current?.stop();
+    }
+
+    return () => {
+      second;
+    };
+  }, [isSpeaking, lottieRef]);
+
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
     const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
@@ -88,7 +102,13 @@ const CompanionComponent = ({
                 "absolute transition-opacity-1000",
                 callStatus === CallStatus.ACTIVE ? "opacity-100" : "opacity-0"
               )}
-            ></div>
+            >
+              <Lottie
+                lottieRef={lottieRef}
+                animationData={soundwaves}
+                autoplay={false}
+              />
+            </div>
           </div>
         </div>
       </section>
