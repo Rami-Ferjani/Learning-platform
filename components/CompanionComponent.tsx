@@ -72,12 +72,8 @@ const CompanionComponent = ({
     vapi.isMuted(!isMuted);
     setIsMuted(!isMuted);
   };
-  const handleCall=async()=>{
-
-  }
-  const handleDisconnect=async()=>{
-    
-  }
+  const handleCall = async () => {};
+  const handleDisconnect = async () => {};
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
@@ -164,6 +160,9 @@ const CompanionComponent = ({
             </button>
           </div>
         </div>
+      </section>
+      <section className="transcript-message no-scrollbar">
+        <div className="transcript-message no-scrollbar">Messages</div>
       </section>
     </section>
   );
