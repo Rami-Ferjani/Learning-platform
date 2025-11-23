@@ -72,7 +72,17 @@ const CompanionComponent = ({
     vapi.isMuted(!isMuted);
     setIsMuted(!isMuted);
   };
-  const handleCall = async () => {};
+  const handleCall = async () => {
+    setCallStatus(CallStatus.CONNECTING);
+    const assistantOverrides={
+      variableValues:{
+        subject,topic,style
+      },
+      clientMessages:['transcript'],
+      serverMessages:[],
+    }
+    vapi.start
+  };
   const handleDisconnect = async () => {};
   return (
     <section className="flex flex-col h-[70vh]">
@@ -163,6 +173,7 @@ const CompanionComponent = ({
       </section>
       <section className="transcript-message no-scrollbar">
         <div className="transcript-message no-scrollbar">Messages</div>
+        <div className="transcript-fade" />
       </section>
     </section>
   );
