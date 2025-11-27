@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { cn, getSubjectColor } from "@/lib/utils";
+import { cn, getSubjectColor, configureAssistant } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import Image from "next/image";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
@@ -46,6 +46,7 @@ const CompanionComponent = ({
 
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
+
     const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
     const onMessage = () => {};
     const onSpeechStart = () => setIsSpeaking(true);
@@ -66,7 +67,7 @@ const CompanionComponent = ({
       vapi.off("speech-start", onSpeechStart);
       vapi.off("speech-end", onSpeechEnd);
     };
-  });
+  }, []);
   const toggleMicrophone = () => {
     const isMuted = vapi.isMuted();
     vapi.isMuted(!isMuted);
@@ -74,14 +75,24 @@ const CompanionComponent = ({
   };
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
-    const assistantOverrides={
-      variableValues:{
-        subject,topic,style
+    const assistantOverrides = {
+      variableValues: {
+        subject,
+        topic,
+        style,
       },
-      clientMessages:['transcript'],
-      serverMessages:[],
+      clientMessages: ["transcript"],
+      serverMessages: [],
+    };
+    console.log("Starting call with:", { voice, style, subject, topic });
+    const assistantConfig = configureAssistant(voice, style);
+    console.log("Assistant Config:", assistantConfig);
+    
+    try {
+      vapi.start(assistantConfig, assistantOverrides);
+    } catch (error) {
+      console.error("Error starting vapi:", error);
     }
-    vapi.start
   };
   const handleDisconnect = async () => {};
   return (
