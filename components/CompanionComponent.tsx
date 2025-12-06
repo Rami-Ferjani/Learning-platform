@@ -87,14 +87,17 @@ const CompanionComponent = ({
     console.log("Starting call with:", { voice, style, subject, topic });
     const assistantConfig = configureAssistant(voice, style);
     console.log("Assistant Config:", assistantConfig);
-    
+
     try {
       vapi.start(assistantConfig, assistantOverrides);
     } catch (error) {
       console.error("Error starting vapi:", error);
     }
   };
-  const handleDisconnect = async () => {};
+  const handleDisconnect = async () => {
+    setCallStatus(CallStatus.FINISHED);
+    vapi.stop();
+  };
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
@@ -154,30 +157,30 @@ const CompanionComponent = ({
                 alt="mic"
                 width={36}
                 height={36}
-              ></Image>
+              />
               <p className="max-sm:hidden">
                 {isMuted ? "Turn on microphone" : "Turn off microphone"}
-                <button
-                  className={cn(
-                    "roundedd-lg py-2 cursor-pointer transition-colors w-full text-white",
-                    callStatus === CallStatus.ACTIVE
-                      ? "bg-red-700"
-                      : "bg-primary",
-                    callStatus === CallStatus.CONNECTING && "animate-pulse"
-                  )}
-                  onClick={
-                    callStatus === CallStatus.ACTIVE
-                      ? handleDisconnect
-                      : handleCall
-                  }
-                >
-                  {callStatus === CallStatus.ACTIVE
-                    ? "End Session"
-                    : callStatus === CallStatus.CONNECTING
-                    ? "Connecting"
-                    : "Start Session"}
-                </button>
               </p>
+            </button>
+            <button
+              className={cn(
+                "rounded-lg py-2 cursor-pointer transition-colors w-full text-white",
+                callStatus === CallStatus.ACTIVE
+                  ? "bg-red-700"
+                  : "bg-primary",
+                callStatus === CallStatus.CONNECTING && "animate-pulse"
+              )}
+              onClick={
+                callStatus === CallStatus.ACTIVE
+                  ? handleDisconnect
+                  : handleCall
+              }
+            >
+              {callStatus === CallStatus.ACTIVE
+                ? "End Session"
+                : callStatus === CallStatus.CONNECTING
+                ? "Connecting"
+                : "Start Session"}
             </button>
           </div>
         </div>
