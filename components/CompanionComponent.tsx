@@ -21,6 +21,18 @@ interface CompanionComponentProps {
   style?: React.CSSProperties;
   voice?: string;
 }
+
+interface Message {
+  type: string;
+  role: string;
+  transcriptType: string;
+  transcript: string;
+}
+
+interface SavedMessage {
+  role: string;
+  content: string;
+}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CompanionComponent = ({
   companionId,
@@ -50,6 +62,7 @@ const CompanionComponent = ({
 
     const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
     const onMessage = (message: Message) => {
+      console.log("Received message:", message);
       if (message.type === "transcript" && message.transcriptType === "final") {
         const newMessage = { role: message.role, content: message.transcript };
         setMessage((prev) => [newMessage, ...prev]);
@@ -189,20 +202,17 @@ const CompanionComponent = ({
       </section>
       <section className="transcript-message no-scrollbar">
         <div className="transcript-message no-scrollbar">
-          {messages.map((message) => {
+          {messages.map((message, index) => {
             if (message.role === "assistant") {
               return (
-                <p key={message.content} className="max-sm:text-sm">
-                  {" "}
-                  {name.split(" ")[0].replace("/[.,]/g", "")}:{message.content}
+                <p key={index} className="max-sm:text-sm">
+                  {(name || "Companion").split(" ")[0].replace(/[.,]/g, "")}:
+                  {message.content}
                 </p>
               );
             } else {
               return (
-                <p
-                  key={message.content}
-                  className="text-primary max-sm:text-sm"
-                >
+                <p key={index} className="text-primary max-sm:text-sm">
                   {userName}:{message.content}
                 </p>
               );
