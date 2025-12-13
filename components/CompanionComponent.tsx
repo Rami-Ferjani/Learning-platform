@@ -89,7 +89,7 @@ const CompanionComponent = ({
   }, []);
   const toggleMicrophone = () => {
     const isMuted = vapi.isMuted();
-    vapi.isMuted(!isMuted);
+    vapi.setMuted(!isMuted);
     setIsMuted(!isMuted);
   };
   const handleCall = async () => {
@@ -170,7 +170,11 @@ const CompanionComponent = ({
               className="rounded-lg"
             />
             <p className="font-bold text-2xl">{userName}</p>
-            <button className="btn-mic" onClick={toggleMicrophone}>
+            <button
+              className="btn-mic"
+              onClick={toggleMicrophone}
+              disabled={callStatus !== CallStatus.ACTIVE}
+            >
               <Image
                 src={isMuted ? "/icons/mic-off.svg" : "/icons/mic-on.svg"}
                 alt="mic"
@@ -200,7 +204,7 @@ const CompanionComponent = ({
           </div>
         </div>
       </section>
-      <section className="transcript-message no-scrollbar">
+      <section className="transcript">
         <div className="transcript-message no-scrollbar">
           {messages.map((message, index) => {
             if (message.role === "assistant") {
