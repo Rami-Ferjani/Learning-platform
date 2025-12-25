@@ -5,6 +5,7 @@ import { vapi } from "@/lib/vapi.sdk";
 import Image from "next/image";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import soundwaves from "@/constants/soundwaves.json";
+import { addToSessionHistory } from "../lib/actions/companion.actions";
 enum CallStatus {
   INACTIVE = "INACTIVE",
   CONNECTING = "CONNECTING",
@@ -60,14 +61,16 @@ const CompanionComponent = ({
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
 
-    const onCallEnd = () => {setCallStatus(CallStatus.FINISHED)
-      //addToSessionHistroy(companionId)
-      
-
+    const onCallEnd = () => {
+      setCallStatus(CallStatus.FINISHED);
+      addToSessionHistory(companionId);
     };
     const onMessage = (message: Message) => {
       console.log("Received message:", message);
+      console.log("Message type:", message.type, "TranscriptType:", message.transcriptType);
+      console.log("Condition check:", message.type === "transcript", message.transcriptType === "final");
       if (message.type === "transcript" && message.transcriptType === "final") {
+        console.log("Adding message to state:", message.role, message.transcript);
         const newMessage = { role: message.role, content: message.transcript };
         setMessage((prev) => [newMessage, ...prev]);
       }
@@ -209,6 +212,7 @@ const CompanionComponent = ({
         </div>
       </section>
       <section className="transcript">
+        <p className="text-red-500 font-bold">Debug: {messages.length} messages</p>
         <div className="transcript-message no-scrollbar">
           {messages.map((message, index) => {
             if (message.role === "assistant") {
