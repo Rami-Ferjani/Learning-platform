@@ -1,3 +1,5 @@
+"use client";
+
 interface CompanionCardProps {
   id: string;
   name: string;
@@ -5,9 +7,12 @@ interface CompanionCardProps {
   subject: string;
   duration: number;
   color: string;
+  Bookmark: boolean;
 }
 import Image from "next/image";
 import Link from "next/link";
+import { addToBookmark } from "@/lib/actions/companion.actions";
+import { useState } from "react";
 const CompanionCard = ({
   id,
   name,
@@ -15,13 +20,22 @@ const CompanionCard = ({
   subject,
   duration,
   color,
+  Bookmark: initialBookmark,
 }: CompanionCardProps) => {
+  const [isBookmarked, setIsBookmarked] = useState(initialBookmark);
+
+  const handleBookmarkToggle = async () => {
+    const newBookmarkState = !isBookmarked;
+    setIsBookmarked(newBookmarkState);
+    await addToBookmark(id, newBookmarkState);
+  };
   return (
     <article className="companion-card" style={{ backgroundColor: color }}>
       <div className="flex justify-between items-center">
         <div className="subject-badge">{subject}</div>
-        <button className="companion-bookmark">
+        <button className="companion-bookmark" onClick={handleBookmarkToggle}>
           <Image
+            style={{ opacity: isBookmarked ? 1 : 0.5 }}
             src="/icons/bookmark.svg"
             alt="bookmark"
             width={12.5}

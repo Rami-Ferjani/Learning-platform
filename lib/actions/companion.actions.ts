@@ -65,6 +65,21 @@ export const addToSessionHistory = async (companionId: string) => {
   return data;
 };
 
+export const addToBookmark = async (companionId: string, Bookmark: boolean) => {
+  const { userId } = await auth();
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase
+    .from("Companions")
+    .update({
+      Bookmark,
+    })
+    .eq("id", companionId)
+    .eq("author", userId);
+
+  if (error) throw new Error(error.message);
+  return data;
+};
+
 export const getRecentSessions = async (limit = 10) => {
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
