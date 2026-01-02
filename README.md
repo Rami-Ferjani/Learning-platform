@@ -7,7 +7,7 @@ Built with modern web technologies to deliver a fast, secure, and scalable learn
 
 ## 🌐 Live Demo
 
-👉 **Live App:** [https://your-live-link.com](https://learning-platform-sgiv.vercel.app/)
+👉 **Live App:** [[https://learning-platform-sgiv.vercel.app/]
 
 ---
 
