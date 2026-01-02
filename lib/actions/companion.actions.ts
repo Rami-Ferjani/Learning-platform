@@ -1,8 +1,8 @@
 "use server";
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseClient } from "../supabase";
-import NewCompanion from "./../../app/companions/new/page";
-import { supabaseIntegration } from "@sentry/nextjs";
+// import NewCompanion from "./../../app/companions/new/page";
+// import { supabaseIntegration } from "@sentry/nextjs";
 
 export const createCompanion = async (formData: CreateCompanion) => {
   const { userId: author } = await auth();
@@ -115,7 +115,7 @@ export const getUserCompanions = async (userId: string) => {
 };
 
 export const NewCompanionPermission = async (userId: string) => {
-  const { user, has } = await auth();
+  const { has } = await auth();
   const supabase = createSupabaseClient();
   let limit = 0;
   if (has({ plan: "pro" })) {
